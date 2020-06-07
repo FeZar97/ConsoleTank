@@ -32,6 +32,11 @@ void getConsoleParams() {
 	GetConsoleScreenBufferInfo(hWndConsole, &consoleInfo);
 	consoleWidth = consoleInfo.srWindow.Right - consoleInfo.srWindow.Left + 1;
     consoleHeight = consoleInfo.srWindow.Bottom - consoleInfo.srWindow.Top + 1;
+	CONSOLE_CURSOR_INFO structCursorInfo;
+	GetConsoleCursorInfo(hWndConsole, &structCursorInfo);
+	structCursorInfo.bVisible = FALSE;
+	SetConsoleCursorInfo(hWndConsole, &structCursorInfo);
+
 };
 struct Tank {
 	int centerX;
@@ -178,6 +183,7 @@ struct Tank {
 
 				break;
 		}
+		ShowCursor(FALSE);
 	};
 
 };
@@ -187,7 +193,6 @@ int main()
 {
 	Tank tank;
 	getConsoleParams();
-	ShowCursor(FALSE);
 
 	tank.setInitialParams(consoleWidth/2, consoleHeight/2, 'S');
 	tank.moveTank('W');
